@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -36,6 +37,20 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jd_modificar = new javax.swing.JDialog();
+        cb_modificar = new javax.swing.JComboBox<>();
+        jd_eliminar = new javax.swing.JDialog();
+        cb_eliminar = new javax.swing.JComboBox<>();
+        jd_tabla = new javax.swing.JDialog();
+        jd_simulacion = new javax.swing.JDialog();
+        cb_equipo1 = new javax.swing.JComboBox<>();
+        cb_equipo2 = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        marcador_local = new javax.swing.JLabel();
+        marcador_visitante = new javax.swing.JLabel();
+        bt_simular = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         menu_equipo = new javax.swing.JMenu();
         crear = new javax.swing.JMenuItem();
@@ -45,6 +60,109 @@ public class Principal extends javax.swing.JFrame {
         menu_partidos = new javax.swing.JMenu();
         simular = new javax.swing.JMenuItem();
         tabla_pos = new javax.swing.JMenuItem();
+
+        javax.swing.GroupLayout jd_modificarLayout = new javax.swing.GroupLayout(jd_modificar.getContentPane());
+        jd_modificar.getContentPane().setLayout(jd_modificarLayout);
+        jd_modificarLayout.setHorizontalGroup(
+            jd_modificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_modificarLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(cb_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(215, Short.MAX_VALUE))
+        );
+        jd_modificarLayout.setVerticalGroup(
+            jd_modificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_modificarLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(cb_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(255, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jd_eliminarLayout = new javax.swing.GroupLayout(jd_eliminar.getContentPane());
+        jd_eliminar.getContentPane().setLayout(jd_eliminarLayout);
+        jd_eliminarLayout.setHorizontalGroup(
+            jd_eliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_eliminarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(cb_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(218, Short.MAX_VALUE))
+        );
+        jd_eliminarLayout.setVerticalGroup(
+            jd_eliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_eliminarLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(cb_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(257, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jd_tablaLayout = new javax.swing.GroupLayout(jd_tabla.getContentPane());
+        jd_tabla.getContentPane().setLayout(jd_tablaLayout);
+        jd_tablaLayout.setHorizontalGroup(
+            jd_tablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jd_tablaLayout.setVerticalGroup(
+            jd_tablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        jLabel1.setText("LOCAL");
+
+        jLabel2.setText("VISITANTE");
+
+        jLabel3.setText("VS");
+
+        marcador_local.setText("0");
+
+        marcador_visitante.setText("0");
+
+        bt_simular.setText("SIMULAR");
+
+        javax.swing.GroupLayout jd_simulacionLayout = new javax.swing.GroupLayout(jd_simulacion.getContentPane());
+        jd_simulacion.getContentPane().setLayout(jd_simulacionLayout);
+        jd_simulacionLayout.setHorizontalGroup(
+            jd_simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_simulacionLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(marcador_local)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jd_simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(jd_simulacionLayout.createSequentialGroup()
+                        .addComponent(cb_equipo1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGroup(jd_simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addGroup(jd_simulacionLayout.createSequentialGroup()
+                        .addComponent(cb_equipo2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(marcador_visitante)))
+                .addContainerGap(52, Short.MAX_VALUE))
+            .addGroup(jd_simulacionLayout.createSequentialGroup()
+                .addGap(137, 137, 137)
+                .addComponent(bt_simular)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jd_simulacionLayout.setVerticalGroup(
+            jd_simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_simulacionLayout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(jd_simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jd_simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cb_equipo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cb_equipo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(marcador_local)
+                    .addComponent(marcador_visitante))
+                .addGap(34, 34, 34)
+                .addComponent(bt_simular)
+                .addContainerGap(38, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -67,6 +185,11 @@ public class Principal extends javax.swing.JFrame {
         menu_equipo.add(modificar);
 
         eliminar.setText("Eliminar");
+        eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarActionPerformed(evt);
+            }
+        });
         menu_equipo.add(eliminar);
 
         cargar_ar.setText("Cargar Archivo");
@@ -77,6 +200,11 @@ public class Principal extends javax.swing.JFrame {
         menu_partidos.setText("Partidos y tabla");
 
         simular.setText("Simulacion");
+        simular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                simularActionPerformed(evt);
+            }
+        });
         menu_partidos.add(simular);
 
         tabla_pos.setText("Tabla de posiciones");
@@ -106,11 +234,15 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarActionPerformed
-        // TODO add your handling code here:
+        jd_modificar.pack();
+        jd_modificar.setLocationRelativeTo(this);
+        jd_modificar.setVisible(true);
     }//GEN-LAST:event_modificarActionPerformed
 
     private void tabla_posActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tabla_posActionPerformed
-        // TODO add your handling code here:
+        jd_tabla.pack();
+        jd_tabla.setLocationRelativeTo(this);
+        jd_tabla.setVisible(true);
     }//GEN-LAST:event_tabla_posActionPerformed
 
     private void crearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearActionPerformed
@@ -125,7 +257,17 @@ public class Principal extends javax.swing.JFrame {
             String nombre, nota;
             nombre = JOptionPane.showInputDialog("nombre");
             Equipos x = new Equipos(nombre,0,0,0,0,0,0,0,0);
+            
             lista.add(x);
+            
+            DefaultComboBoxModel dc=
+                    (DefaultComboBoxModel) cb_equipo1.getModel();
+            dc.addElement(x);
+            
+            cb_equipo1.setModel(dc);
+            cb_equipo2.setModel(dc);
+            cb_modificar.setModel(dc);
+            cb_eliminar.setModel(dc);
             
             bw.write(nombre + "," + x.getPartidos() +"," + x.getGanados() + "," + x.getEmpatados() + "," + x.getPerdidios() + "," +
             x.getGf()+","+x.getGc()+","+x.getDiff()+","+x.getPts());
@@ -139,6 +281,18 @@ public class Principal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Ocurrio un error al agregar");
         }  
     }//GEN-LAST:event_crearActionPerformed
+
+    private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
+        jd_eliminar.pack();
+        jd_eliminar.setLocationRelativeTo(this);
+        jd_eliminar.setVisible(true);
+    }//GEN-LAST:event_eliminarActionPerformed
+
+    private void simularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simularActionPerformed
+        jd_simulacion.pack();
+        jd_simulacion.setLocationRelativeTo(this);
+        jd_simulacion.setVisible(true);
+    }//GEN-LAST:event_simularActionPerformed
 
     /**
      * @param args the command line arguments
@@ -176,10 +330,24 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bt_simular;
     private javax.swing.JMenuItem cargar_ar;
+    private javax.swing.JComboBox<String> cb_eliminar;
+    private javax.swing.JComboBox<String> cb_equipo1;
+    private javax.swing.JComboBox<String> cb_equipo2;
+    private javax.swing.JComboBox<String> cb_modificar;
     private javax.swing.JMenuItem crear;
     private javax.swing.JMenuItem eliminar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JDialog jd_eliminar;
+    private javax.swing.JDialog jd_modificar;
+    private javax.swing.JDialog jd_simulacion;
+    private javax.swing.JDialog jd_tabla;
+    private javax.swing.JLabel marcador_local;
+    private javax.swing.JLabel marcador_visitante;
     private javax.swing.JMenu menu_equipo;
     private javax.swing.JMenu menu_partidos;
     private javax.swing.JMenuItem modificar;
