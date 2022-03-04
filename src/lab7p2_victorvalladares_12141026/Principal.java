@@ -11,6 +11,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -320,6 +322,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_modificarActionPerformed
 
     private void tabla_posActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tabla_posActionPerformed
+        ordenar();
         tabla.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{},
                 new String[]{
@@ -419,8 +422,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_bt_simularMouseClicked
 
     private void bt_eliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_eliminarMouseClicked
-        try{
-            cb_eliminar.remove(cb_eliminar.getSelectedIndex());
+        try{  
             lista.remove(cb_eliminar.getSelectedIndex());
             int pos = cb_modificar.getSelectedIndex();
             
@@ -433,7 +435,7 @@ public class Principal extends javax.swing.JFrame {
             
             DefaultComboBoxModel dc=
                     (DefaultComboBoxModel) cb_eliminar.getModel();
-
+            cb_eliminar.remove(cb_eliminar.getSelectedIndex());
             cb_equipo1.setModel(dc);
             cb_modificar.setModel(dc);
             cb_eliminar.setModel(dc);
@@ -441,6 +443,7 @@ public class Principal extends javax.swing.JFrame {
 
             DefaultComboBoxModel cb=
                     (DefaultComboBoxModel) cb_eliminar.getModel();
+            cb_eliminar.remove(cb_eliminar.getSelectedIndex());
             cb_equipo2.setModel(cb);
             
         }catch(Exception e){
@@ -466,7 +469,7 @@ public class Principal extends javax.swing.JFrame {
 
             DefaultComboBoxModel dc=
                     (DefaultComboBoxModel) cb_modificar.getModel();
-
+            
             cb_equipo1.setModel(dc);
             cb_modificar.setModel(dc);
             cb_eliminar.setModel(dc);
@@ -616,5 +619,13 @@ public class Principal extends javax.swing.JFrame {
            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al simular el partido");
        }
        
+    }
+    private void ordenar (){
+       Collections.sort(lista, new Comparator<Equipos>() {
+            @Override
+            public int compare(Equipos e1, Equipos e2) {
+                    return new Integer(e2.getPts()).compareTo(new Integer(e1.getPts()));
+            }
+        });
     }
 }
