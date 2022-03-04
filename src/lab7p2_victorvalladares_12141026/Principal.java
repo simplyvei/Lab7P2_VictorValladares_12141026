@@ -43,6 +43,7 @@ public class Principal extends javax.swing.JFrame {
         cb_modificar = new javax.swing.JComboBox<>();
         jd_eliminar = new javax.swing.JDialog();
         cb_eliminar = new javax.swing.JComboBox<>();
+        bt_eliminar = new javax.swing.JButton();
         jd_tabla = new javax.swing.JDialog();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
@@ -82,21 +83,35 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap(255, Short.MAX_VALUE))
         );
 
+        bt_eliminar.setText("Eliminar");
+        bt_eliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bt_eliminarMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jd_eliminarLayout = new javax.swing.GroupLayout(jd_eliminar.getContentPane());
         jd_eliminar.getContentPane().setLayout(jd_eliminarLayout);
         jd_eliminarLayout.setHorizontalGroup(
             jd_eliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jd_eliminarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(cb_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(218, Short.MAX_VALUE))
+                .addGroup(jd_eliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jd_eliminarLayout.createSequentialGroup()
+                        .addGap(91, 91, 91)
+                        .addComponent(bt_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jd_eliminarLayout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(cb_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(149, Short.MAX_VALUE))
         );
         jd_eliminarLayout.setVerticalGroup(
             jd_eliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jd_eliminarLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addGap(29, 29, 29)
                 .addComponent(cb_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(257, Short.MAX_VALUE))
+                .addGap(33, 33, 33)
+                .addComponent(bt_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         tabla.setModel(new javax.swing.table.DefaultTableModel(
@@ -164,14 +179,14 @@ public class Principal extends javax.swing.JFrame {
                         .addComponent(cb_equipo1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel3)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addGroup(jd_simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addGroup(jd_simulacionLayout.createSequentialGroup()
                         .addComponent(cb_equipo2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(marcador_visitante)))
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
             .addGroup(jd_simulacionLayout.createSequentialGroup()
                 .addGap(137, 137, 137)
                 .addComponent(bt_simular)
@@ -332,15 +347,6 @@ public class Principal extends javax.swing.JFrame {
             
             lista.add(x);
             
-            DefaultComboBoxModel dc=
-                    (DefaultComboBoxModel) cb_equipo1.getModel();
-            dc.addElement(x);
-            
-            cb_equipo1.setModel(dc);
-            cb_equipo2.setModel(dc);
-            cb_modificar.setModel(dc);
-            cb_eliminar.setModel(dc);
-            
             bw.write(nombre + "," + x.getPartidos() +"," + x.getGanados() + "," + x.getEmpatados() + "," + x.getPerdidios() + "," +
             x.getGf()+","+x.getGc()+","+x.getDiff()+","+x.getPts());
             
@@ -349,6 +355,21 @@ public class Principal extends javax.swing.JFrame {
             
             bw.close();
             fw.close();
+            
+            DefaultComboBoxModel dc=
+                    (DefaultComboBoxModel) cb_equipo1.getModel();
+            dc.addElement(x);
+            
+            cb_equipo1.setModel(dc);
+            cb_modificar.setModel(dc);
+            cb_eliminar.setModel(dc);
+            
+            
+            DefaultComboBoxModel cb=
+                    (DefaultComboBoxModel) cb_equipo2.getModel();
+            cb.addElement(x);
+            cb_equipo2.setModel(cb);
+            
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "Ocurrio un error al agregar");
         }  
@@ -369,6 +390,24 @@ public class Principal extends javax.swing.JFrame {
     private void bt_simularMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_simularMouseClicked
         partido();
     }//GEN-LAST:event_bt_simularMouseClicked
+
+    private void bt_eliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_eliminarMouseClicked
+        try{
+            cb_eliminar.remove(cb_eliminar.getSelectedIndex());
+            lista.remove(cb_eliminar.getSelectedIndex());
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "No se ha podido eliminar ya que no hay autos que eliminar");
+        }
+        
+        
+        
+        DefaultComboBoxModel dc=
+            (DefaultComboBoxModel) cb_eliminar.getModel();
+        cb_equipo1.setModel(dc);
+        cb_equipo2.setModel(dc);
+        cb_modificar.setModel(dc);
+        cb_eliminar.setModel(dc);
+    }//GEN-LAST:event_bt_eliminarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -406,6 +445,7 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bt_eliminar;
     private javax.swing.JButton bt_simular;
     private javax.swing.JMenuItem cargar_ar;
     private javax.swing.JComboBox<String> cb_eliminar;
@@ -435,11 +475,14 @@ public class Principal extends javax.swing.JFrame {
     
     ArrayList <Equipos> lista = new ArrayList ();
     Random r = new Random();
+    Equipos local;
+    Equipos visitante;
     
     private void partido(){
-       Equipos local = (Equipos) cb_equipo1.getSelectedItem();
-       Equipos visitante = (Equipos) cb_equipo2.getSelectedItem();
+       
        try{
+            local = (Equipos) cb_equipo1.getSelectedItem();
+            visitante = (Equipos) cb_equipo2.getSelectedItem();
             int localr = r.nextInt(6)+0;
             int visitanter = r.nextInt(6)+0;
             local.setGf(local.getGf()+localr);
@@ -459,6 +502,10 @@ public class Principal extends javax.swing.JFrame {
                 visitante.setPts(visitante.getPts()+3);
                 JOptionPane.showMessageDialog(null, "Ha ganado el equipo visitante: " + visitante.getNombre());
             }
+            
+            local.setDiff(local.getGf() - local.getGc());
+            visitante.setDiff(visitante.getGf() - visitante.getGc());
+            
             marcador_local.setText(""+localr);
             marcador_visitante.setText(""+visitanter);
        }catch (Exception e){
