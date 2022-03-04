@@ -44,11 +44,12 @@ public class AdministrarEquipos {
         FileWriter fw = null;
         BufferedWriter bw = null;
         try {
-            fw = new FileWriter(archivo, false);
+            fw = new FileWriter(archivo, true);
             bw = new BufferedWriter(fw);
             for (Equipos x : listaEquipos) {
                 bw.write(x.getNombre() + "," + x.getPartidos() +"," + x.getGanados() + "," + x.getEmpatados() + "," + x.getPerdidios() + "," +
                 x.getGf()+","+x.getGc()+","+x.getDiff()+","+x.getPts());
+                bw.newLine();
             }
             bw.flush();
         } catch (Exception ex) {

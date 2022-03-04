@@ -621,10 +621,15 @@ public class Principal extends javax.swing.JFrame {
        
     }
     private void ordenar (){
+        
        Collections.sort(lista, new Comparator<Equipos>() {
             @Override
             public int compare(Equipos e1, Equipos e2) {
+                if (e1.getPts() != e2.getPts()){
                     return new Integer(e2.getPts()).compareTo(new Integer(e1.getPts()));
+                }else{
+                    return new Integer(e2.getDiff()).compareTo(new Integer(e1.getDiff()));
+                }    
             }
         });
     }
