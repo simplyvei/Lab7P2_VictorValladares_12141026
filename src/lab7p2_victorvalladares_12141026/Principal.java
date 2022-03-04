@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -42,6 +43,8 @@ public class Principal extends javax.swing.JFrame {
         jd_eliminar = new javax.swing.JDialog();
         cb_eliminar = new javax.swing.JComboBox<>();
         jd_tabla = new javax.swing.JDialog();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabla = new javax.swing.JTable();
         jd_simulacion = new javax.swing.JDialog();
         cb_equipo1 = new javax.swing.JComboBox<>();
         cb_equipo2 = new javax.swing.JComboBox<>();
@@ -95,15 +98,38 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap(257, Short.MAX_VALUE))
         );
 
+        tabla.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8", "Title 9"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tabla);
+
         javax.swing.GroupLayout jd_tablaLayout = new javax.swing.GroupLayout(jd_tabla.getContentPane());
         jd_tabla.getContentPane().setLayout(jd_tablaLayout);
         jd_tablaLayout.setHorizontalGroup(
             jd_tablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(jd_tablaLayout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 633, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jd_tablaLayout.setVerticalGroup(
             jd_tablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
 
         jLabel1.setText("LOCAL");
@@ -240,6 +266,46 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_modificarActionPerformed
 
     private void tabla_posActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tabla_posActionPerformed
+        tabla.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{},
+                new String[]{
+                    "Nombre", "PJ", "G", "E", "P", "GF", "GC", "DG", "Pts"
+                }
+        ) {
+            Class[] types = new Class[]{
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean[]{
+                false, false, false, false, false, false, false, false, false
+            };
+
+            /*public Class getColumnClass(int columnIndex) {
+                return types[columnIndex];
+            }*/
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
+            }
+        });
+        
+        for (Equipos equipo : lista){
+            Object[] newrow = {
+                equipo.getNombre(),
+                equipo.getPartidos(),
+                equipo.getGanados(),
+                equipo.getEmpatados(),
+                equipo.getPerdidios(),
+                equipo.getGf(),
+                equipo.getGc(),
+                equipo.getDiff(),
+                equipo.getPts()
+            };  
+            DefaultTableModel modelo
+                        = (DefaultTableModel) tabla.getModel();
+            modelo.addRow(newrow);
+            tabla.setModel(modelo);
+        }
+        
         jd_tabla.pack();
         jd_tabla.setLocationRelativeTo(this);
         jd_tabla.setVisible(true);
@@ -251,7 +317,7 @@ public class Principal extends javax.swing.JFrame {
         BufferedWriter bw = null;
         try{
             archivo =new File("./equipos.txt");
-            fw = new FileWriter (archivo);
+            fw = new FileWriter (archivo, true);
             bw = new BufferedWriter (fw);
             
             String nombre, nota;
@@ -342,6 +408,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JDialog jd_eliminar;
     private javax.swing.JDialog jd_modificar;
     private javax.swing.JDialog jd_simulacion;
@@ -352,8 +419,13 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu menu_partidos;
     private javax.swing.JMenuItem modificar;
     private javax.swing.JMenuItem simular;
+    private javax.swing.JTable tabla;
     private javax.swing.JMenuItem tabla_pos;
     // End of variables declaration//GEN-END:variables
     
     ArrayList <Equipos> lista = new ArrayList ();
+    
+    private void partido(){
+        
+    }
 }
