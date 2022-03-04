@@ -6,8 +6,10 @@
 
 package lab7p2_victorvalladares_12141026;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -370,9 +372,18 @@ public class Principal extends javax.swing.JFrame {
 
     private void crearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearActionPerformed
         try{
+            AdministrarEquipos ae=
+                new AdministrarEquipos("./equipos.txt"); 
             
             String nombre;
             nombre = JOptionPane.showInputDialog("nombre");
+            
+            for (Equipos t : ae.getListaEquipos()) {
+                if (nombre.equalsIgnoreCase(t.getNombre())){
+                    nombre = JOptionPane.showInputDialog("El nombre ya existe. Intente de nuevo");
+                }
+            } 
+            
             Equipos x = new Equipos(nombre,0,0,0,0,0,0,0,0);
             
             lista.add(x);
@@ -392,8 +403,7 @@ public class Principal extends javax.swing.JFrame {
             cb_equipo2.setModel(cb);
             
             
-            AdministrarEquipos ae=
-                new AdministrarEquipos("./equipos.txt");        
+                   
             ae.cargarArchivo();
             
             ae.getListaEquipos().add(x);
@@ -491,7 +501,10 @@ public class Principal extends javax.swing.JFrame {
            AdministrarEquipos ae=
                     new AdministrarEquipos("./equipos.txt");        
             ae.cargarArchivo();
-            for (Equipos t : ae.getListaEquipos()) {
+            System.out.println(ae.getListaEquipos());
+            lista = ae.getListaEquipos();
+            
+            for (Equipos t : lista) {
                 DefaultComboBoxModel dc=
                     (DefaultComboBoxModel) cb_equipo1.getModel();
                 dc.addElement(t);
@@ -505,10 +518,10 @@ public class Principal extends javax.swing.JFrame {
                         (DefaultComboBoxModel) cb_equipo2.getModel();
                 cb.addElement(t);
                 cb_equipo2.setModel(cb);
-                lista.add(t);
-            } 
+               
+            }
         }catch(Exception e){
-            
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
         }    
         
     }//GEN-LAST:event_cargar_arActionPerformed
@@ -588,6 +601,7 @@ public class Principal extends javax.swing.JFrame {
     private void partido(){
        
        try{
+            
             local = (Equipos) cb_equipo1.getSelectedItem();
             visitante = (Equipos) cb_equipo2.getSelectedItem();
             int localr = r.nextInt(6)+0;
@@ -601,6 +615,8 @@ public class Principal extends javax.swing.JFrame {
             if (localr == visitanter){
                 local.setPts(local.getPts()+1);
                 visitante.setPts(visitante.getPts()+1);
+                //ae.getListaEquipos().get(pos1).setPts(local.getPts()+1);
+                //ae.getListaEquipos().get(pos2).setPts(visitante.getPts()+1);
                 JOptionPane.showMessageDialog(null, "Ha sido un empate");
             }else if(localr > visitanter){
                 local.setPts(local.getPts()+3);
