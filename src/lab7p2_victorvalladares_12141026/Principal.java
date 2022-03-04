@@ -41,6 +41,9 @@ public class Principal extends javax.swing.JFrame {
 
         jd_modificar = new javax.swing.JDialog();
         cb_modificar = new javax.swing.JComboBox<>();
+        bt_modificar = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        tf_nuevo_nombre = new javax.swing.JTextField();
         jd_eliminar = new javax.swing.JDialog();
         cb_eliminar = new javax.swing.JComboBox<>();
         bt_eliminar = new javax.swing.JButton();
@@ -66,21 +69,46 @@ public class Principal extends javax.swing.JFrame {
         simular = new javax.swing.JMenuItem();
         tabla_pos = new javax.swing.JMenuItem();
 
+        bt_modificar.setText("Modificar");
+        bt_modificar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bt_modificarMouseClicked(evt);
+            }
+        });
+
+        jLabel4.setText("Nuevo Nombre");
+
         javax.swing.GroupLayout jd_modificarLayout = new javax.swing.GroupLayout(jd_modificar.getContentPane());
         jd_modificar.getContentPane().setLayout(jd_modificarLayout);
         jd_modificarLayout.setHorizontalGroup(
             jd_modificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jd_modificarLayout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(cb_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(215, Short.MAX_VALUE))
+                .addGroup(jd_modificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jd_modificarLayout.createSequentialGroup()
+                        .addComponent(cb_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(142, 142, 142))
+                    .addGroup(jd_modificarLayout.createSequentialGroup()
+                        .addComponent(bt_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(165, 165, 165))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jd_modificarLayout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tf_nuevo_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
         jd_modificarLayout.setVerticalGroup(
             jd_modificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jd_modificarLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(cb_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(255, Short.MAX_VALUE))
+                .addGap(57, 57, 57)
+                .addGroup(jd_modificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(tf_nuevo_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(51, 51, 51)
+                .addComponent(bt_modificar)
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         bt_eliminar.setText("Eliminar");
@@ -240,6 +268,11 @@ public class Principal extends javax.swing.JFrame {
         menu_equipo.add(eliminar);
 
         cargar_ar.setText("Cargar Archivo");
+        cargar_ar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cargar_arActionPerformed(evt);
+            }
+        });
         menu_equipo.add(cargar_ar);
 
         jMenuBar1.add(menu_equipo);
@@ -333,28 +366,13 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_tabla_posActionPerformed
 
     private void crearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearActionPerformed
-        File archivo = null;
-        FileWriter fw = null;
-        BufferedWriter bw = null;
         try{
-            archivo =new File("./equipos.txt");
-            fw = new FileWriter (archivo, true);
-            bw = new BufferedWriter (fw);
             
-            String nombre, nota;
+            String nombre;
             nombre = JOptionPane.showInputDialog("nombre");
             Equipos x = new Equipos(nombre,0,0,0,0,0,0,0,0);
             
             lista.add(x);
-            
-            bw.write(nombre + "," + x.getPartidos() +"," + x.getGanados() + "," + x.getEmpatados() + "," + x.getPerdidios() + "," +
-            x.getGf()+","+x.getGc()+","+x.getDiff()+","+x.getPts());
-            
-            bw.newLine();
-            bw.flush();
-            
-            bw.close();
-            fw.close();
             
             DefaultComboBoxModel dc=
                     (DefaultComboBoxModel) cb_equipo1.getModel();
@@ -369,6 +387,15 @@ public class Principal extends javax.swing.JFrame {
                     (DefaultComboBoxModel) cb_equipo2.getModel();
             cb.addElement(x);
             cb_equipo2.setModel(cb);
+            
+            
+            AdministrarEquipos ae=
+                new AdministrarEquipos("./equipos.txt");        
+            ae.cargarArchivo();
+            
+            ae.getListaEquipos().add(x);
+            ae.escribirArchivo();
+            
             
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "Ocurrio un error al agregar");
@@ -395,19 +422,93 @@ public class Principal extends javax.swing.JFrame {
         try{
             cb_eliminar.remove(cb_eliminar.getSelectedIndex());
             lista.remove(cb_eliminar.getSelectedIndex());
+            int pos = cb_modificar.getSelectedIndex();
+            
+            AdministrarEquipos ae=
+                new AdministrarEquipos("./equipos.txt");  
+
+            ae.cargarArchivo();
+            ae.getListaEquipos().remove(pos); 
+            ae.escribirArchivo();
+            
+            DefaultComboBoxModel dc=
+                    (DefaultComboBoxModel) cb_eliminar.getModel();
+
+            cb_equipo1.setModel(dc);
+            cb_modificar.setModel(dc);
+            cb_eliminar.setModel(dc);
+
+
+            DefaultComboBoxModel cb=
+                    (DefaultComboBoxModel) cb_eliminar.getModel();
+            cb_equipo2.setModel(cb);
+            
         }catch(Exception e){
             JOptionPane.showMessageDialog(this, "No se ha podido eliminar ya que no hay autos que eliminar");
         }
+  
         
-        
-        
-        DefaultComboBoxModel dc=
-            (DefaultComboBoxModel) cb_eliminar.getModel();
-        cb_equipo1.setModel(dc);
-        cb_equipo2.setModel(dc);
-        cb_modificar.setModel(dc);
-        cb_eliminar.setModel(dc);
     }//GEN-LAST:event_bt_eliminarMouseClicked
+
+    private void bt_modificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_modificarMouseClicked
+        try {
+            Equipos modificar = (Equipos) cb_modificar.getSelectedItem();
+            int pos = cb_modificar.getSelectedIndex();
+            modificar.setNombre(tf_nuevo_nombre.getText());
+
+            AdministrarEquipos ae=
+                new AdministrarEquipos("./equipos.txt");  
+
+            ae.cargarArchivo();
+            ae.getListaEquipos().get(pos).setNombre(tf_nuevo_nombre.getText()); 
+            ae.escribirArchivo();
+
+
+            DefaultComboBoxModel dc=
+                    (DefaultComboBoxModel) cb_modificar.getModel();
+
+            cb_equipo1.setModel(dc);
+            cb_modificar.setModel(dc);
+            cb_eliminar.setModel(dc);
+
+
+            DefaultComboBoxModel cb=
+                    (DefaultComboBoxModel) cb_modificar.getModel();
+            cb_equipo2.setModel(cb);
+
+            tf_nuevo_nombre.setText("");
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
+        }
+        
+    }//GEN-LAST:event_bt_modificarMouseClicked
+
+    private void cargar_arActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargar_arActionPerformed
+        try{
+           AdministrarEquipos ae=
+                    new AdministrarEquipos("./equipos.txt");        
+            ae.cargarArchivo();
+            for (Equipos t : ae.getListaEquipos()) {
+                DefaultComboBoxModel dc=
+                    (DefaultComboBoxModel) cb_equipo1.getModel();
+                dc.addElement(t);
+            
+                cb_equipo1.setModel(dc);
+                cb_modificar.setModel(dc);
+                cb_eliminar.setModel(dc);
+            
+            
+                DefaultComboBoxModel cb=
+                        (DefaultComboBoxModel) cb_equipo2.getModel();
+                cb.addElement(t);
+                cb_equipo2.setModel(cb);
+                lista.add(t);
+            } 
+        }catch(Exception e){
+            
+        }    
+        
+    }//GEN-LAST:event_cargar_arActionPerformed
 
     /**
      * @param args the command line arguments
@@ -446,6 +547,7 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_eliminar;
+    private javax.swing.JButton bt_modificar;
     private javax.swing.JButton bt_simular;
     private javax.swing.JMenuItem cargar_ar;
     private javax.swing.JComboBox<String> cb_eliminar;
@@ -457,6 +559,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JDialog jd_eliminar;
@@ -471,6 +574,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem simular;
     private javax.swing.JTable tabla;
     private javax.swing.JMenuItem tabla_pos;
+    private javax.swing.JTextField tf_nuevo_nombre;
     // End of variables declaration//GEN-END:variables
     
     ArrayList <Equipos> lista = new ArrayList ();
