@@ -6,7 +6,14 @@
 
 package lab7p2_victorvalladares_12141026;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -107,7 +114,30 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_tabla_posActionPerformed
 
     private void crearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearActionPerformed
-        
+        File archivo = null;
+        FileWriter fw = null;
+        BufferedWriter bw = null;
+        try{
+            archivo =new File("./equipos.txt");
+            fw = new FileWriter (archivo);
+            bw = new BufferedWriter (fw);
+            
+            String nombre, nota;
+            nombre = JOptionPane.showInputDialog("nombre");
+            Equipos x = new Equipos(nombre,0,0,0,0,0,0,0,0);
+            lista.add(x);
+            
+            bw.write(nombre + "," + x.getPartidos() +"," + x.getGanados() + "," + x.getEmpatados() + "," + x.getPerdidios() + "," +
+            x.getGf()+","+x.getGc()+","+x.getDiff()+","+x.getPts());
+            
+            bw.newLine();
+            bw.flush();
+            
+            bw.close();
+            fw.close();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Ocurrio un error al agregar");
+        }  
     }//GEN-LAST:event_crearActionPerformed
 
     /**
