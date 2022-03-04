@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
@@ -143,6 +144,11 @@ public class Principal extends javax.swing.JFrame {
         marcador_visitante.setText("0");
 
         bt_simular.setText("SIMULAR");
+        bt_simular.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bt_simularMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jd_simulacionLayout = new javax.swing.GroupLayout(jd_simulacion.getContentPane());
         jd_simulacion.getContentPane().setLayout(jd_simulacionLayout);
@@ -273,15 +279,15 @@ public class Principal extends javax.swing.JFrame {
                 }
         ) {
             Class[] types = new Class[]{
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean[]{
                 false, false, false, false, false, false, false, false, false
             };
 
-            /*public Class getColumnClass(int columnIndex) {
+            public Class getColumnClass(int columnIndex) {
                 return types[columnIndex];
-            }*/
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit[columnIndex];
@@ -360,6 +366,10 @@ public class Principal extends javax.swing.JFrame {
         jd_simulacion.setVisible(true);
     }//GEN-LAST:event_simularActionPerformed
 
+    private void bt_simularMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_simularMouseClicked
+        partido();
+    }//GEN-LAST:event_bt_simularMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -424,8 +434,36 @@ public class Principal extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     
     ArrayList <Equipos> lista = new ArrayList ();
+    Random r = new Random();
     
     private void partido(){
-        
+       Equipos local = (Equipos) cb_equipo1.getSelectedItem();
+       Equipos visitante = (Equipos) cb_equipo2.getSelectedItem();
+       try{
+            int localr = r.nextInt(6)+0;
+            int visitanter = r.nextInt(6)+0;
+            local.setGf(local.getGf()+localr);
+            local.setGc(local.getGc()+visitanter);
+
+            visitante.setGf(visitante.getGf()+visitanter);
+            visitante.setGc(visitante.getGc()+localr);
+
+            if (localr == visitanter){
+                local.setPts(local.getPts()+1);
+                visitante.setPts(visitante.getPts()+1);
+                JOptionPane.showMessageDialog(null, "Ha sido un empate");
+            }else if(localr > visitanter){
+                local.setPts(local.getPts()+3);
+                JOptionPane.showMessageDialog(null, "Ha ganado el equipo local: " + local.getNombre());
+            }else{
+                visitante.setPts(visitante.getPts()+3);
+                JOptionPane.showMessageDialog(null, "Ha ganado el equipo visitante: " + visitante.getNombre());
+            }
+            marcador_local.setText(""+localr);
+            marcador_visitante.setText(""+visitanter);
+       }catch (Exception e){
+           JOptionPane.showMessageDialog(null, "Ha ocurrido un error al simular el partido");
+       }
+       
     }
 }

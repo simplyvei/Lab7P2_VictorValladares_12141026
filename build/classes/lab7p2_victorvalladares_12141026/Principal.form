@@ -226,6 +226,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="SIMULAR"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bt_simularMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
